@@ -1,12 +1,9 @@
 import logging
 import tkinter as tk
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
+from typing import Any
 
 from shape import EllipseShape, LineShape, PointShape, RectShape
-
-if TYPE_CHECKING:
-    from shape_objects_editor import ShapeObjectsEditor
 
 __all__ = [
     "Editor",
@@ -39,7 +36,7 @@ class Editor(ABC):
 
 
 class ShapeEditor(Editor):
-    def __init__(self, owner: "ShapeObjectsEditor") -> None:
+    def __init__(self, owner: Any) -> None:
         self._owner = owner
         self._x_start: int = 0
         self._y_start: int = 0
