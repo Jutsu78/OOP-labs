@@ -23,37 +23,27 @@ class ShapeObjectsEditor:
         self._pcshape: list[Shape | None] = [None] * self.ARRAY_CAPACITY
         self._count: int = 0
 
-        self._point_editor = PointEditor(self)
-        self._line_editor = LineEditor(self)
-        self._rect_editor = RectEditor(self)
-        self._ellipse_editor = EllipseEditor(self)
+        self._editors: dict[str, ShapeEditor] = {
+            "point": PointEditor(self),
+            "line": LineEditor(self),
+            "rect": RectEditor(self),
+            "ellipse": EllipseEditor(self),
+        }
 
-        self._current_editor: ShapeEditor = self._point_editor
         self._current_type_name: str = "point"
+        self._current_editor: ShapeEditor = self._editors[self._current_type_name]
 
     @property
     def current_type_name(self) -> str:
         return self._current_type_name
 
-    def start_point_editor(self) -> None:
-        logger.info("Switching mode to PointEditor.")
-        self._current_editor = self._point_editor
-        self._current_type_name = "point"
-
-    def start_line_editor(self) -> None:
-        logger.info("Switching mode to LineEditor.")
-        self._current_editor = self._line_editor
-        self._current_type_name = "line"
-
-    def start_rect_editor(self) -> None:
-        logger.info("Switching mode to RectEditor.")
-        self._current_editor = self._rect_editor
-        self._current_type_name = "rect"
-
-    def start_ellipse_editor(self) -> None:
-        logger.info("Switching mode to EllipseEditor.")
-        self._current_editor = self._ellipse_editor
-        self._current_type_name = "ellipse"
+    def start_editor(self, shape_type: str) -> None:
+        if shape_type in self._editors:
+            logger.info("Switching mode to %s.", shape_type)
+            self._current_editor = self._editors[shape_type]
+            self._current_type_name = shape_type
+        else:
+            logger.error("Unknown editor type requested: '%s'.", shape_type)
 
     def on_lb_down(self, event: tk.Event) -> None:
         self._current_editor.on_lb_down(event)

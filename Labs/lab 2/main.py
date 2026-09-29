@@ -47,25 +47,25 @@ class MainWindow(tk.Tk):
             label="Крапка",
             variable=self._menu_shape_var,
             value="point",
-            command=self._editor.start_point_editor,
+            command=lambda: self._editor.start_editor("point"),
         )
         objects_menu.add_radiobutton(
             label="Лінія",
             variable=self._menu_shape_var,
             value="line",
-            command=self._editor.start_line_editor,
+            command=lambda: self._editor.start_editor("line"),
         )
         objects_menu.add_radiobutton(
             label="Прямокутник",
             variable=self._menu_shape_var,
             value="rect",
-            command=self._editor.start_rect_editor,
+            command=lambda: self._editor.start_editor("rect"),
         )
         objects_menu.add_radiobutton(
             label="Еліпс",
             variable=self._menu_shape_var,
             value="ellipse",
-            command=self._editor.start_ellipse_editor,
+            command=lambda: self._editor.start_editor("ellipse"),
         )
         menubar.add_cascade(label="Об'єкти", menu=objects_menu)
 
